@@ -1,61 +1,52 @@
 #p351.AvoidWatch
-#skip
 n = int(input())
-# T = teacher, S=Student, O=Wal, X=Empty
-graph = [input().split() for _ in range(n)]
-student, teacher = [], []
-for i in range(n):
-    for j in range(n):
-        if graph[i][j] == 'S':
-            student.append((i, j))
-        if graph[i][j] == 'T':
-            teacher.append((i, j))
+#T = teacher, S=Student, O=Wal, X=Empty
+graph = [input().split() for _ in range(n)] 
+students, teachers = [], []
 
-def detected():
-    for x, y in student:
-        nx = x
-        while nx >= 0 and graph[nx][y] != 'O':
-            if graph[nx][y] == 'T':
+for x in range(n):
+    for y in range(n):
+        if graph[x][y] == 'S':
+            students.append((x, y))
+        elif graph[x][y] == 'T':
+            teachers.append((x, y))
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+#Check Avoid
+def Search(xy):
+    for d in range(4):
+        x, y = xy
+        x += dx[d]
+        y += dy[d]
+        while x >= 0 and y >= 0 and x < n and y < n and graph[x][y] != 'O':
+            if graph[x][y] == 'S' :
                 return False
-            nx-=1
-        nx = x
-        while nx < n and graph[nx][y] != 'O' :
-            if graph[nx][y] == 'T':
-                return False
-            nx+=1
-        ny = y
-        while ny >= 0 and graph[x][ny] != 'O' :
-            if graph[x][ny] == 'T':
-                return False
-            ny-=1
-        ny = y
-        while ny < n and graph[x][ny] != 'O' :
-            if graph[x][ny] == 'T':
-                return False
-            ny+=1
+            x += dx[d]
+            y += dy[d]
     return True
 
-answer = False
-def solution(cnt):
-    global answer
-    if cnt == 3:
-        if detected() :
-            answer = True
-        return
-
+def Build_wall(cnt):
+    #벽을 3개 지었다면 감시를 피했는지 확인
+    if cnt == 3 :
+        for teacher in teachers:
+            if Search(teacher) == False:
+                return False
+        return True
     for x in range(n):
         for y in range(n):
             if graph[x][y] == 'X':
                 graph[x][y] = 'O'
-                cnt+=1
-                solution(cnt)
+                if Build_wall(cnt+1) == True :
+                    return True
                 graph[x][y] = 'X'
-                cnt-=1
 
-solution(0)
-
-if answer :
+if Build_wall(0) :
     print('Yes')
 else :
     print('No')
 
+
+for i in graph:
+    print(i)
