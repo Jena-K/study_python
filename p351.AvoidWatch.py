@@ -46,7 +46,3 @@ if Build_wall(0) :
     print('Yes')
 else :
     print('No')
-
-
-for i in graph:
-    print(i)
