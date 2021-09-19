@@ -1,17 +1,13 @@
-from collections import deque
+n, m = map(int, input().split())
 
-n = int(input())
-q = deque()
-for _ in range(n) :
-    q.append(int(input()))
+arr = [i for i in range(1, n+1)]
 ans = []
-stack = []
-for i in range(1,n+1):
-    x = q.pop()
-    if i == x :
-        ans.append(x)
-    elif i < x :
-        stack.append(x)
-    elif i > x :
-        while stack:
-            ans.append(stack.pop())
+cnt = 0
+
+while arr :
+    cnt-=1
+    for _ in range(m):
+        cnt = (cnt+1)%len(arr)
+    ans.append(str(arr.pop(cnt)))
+
+print('<%s>' % ', '.join(ans))
