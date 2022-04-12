@@ -1,42 +1,35 @@
-#N극:0 S극:1
-wheel = [list(map(int, input())) for _ in range(4)]
-c = [(0, 0)] * 4
-k = int(input())
-order = [list(map(int, input().split())) for _ in range(k)]
+n, m = map(int, input().split())
 
-'''
-   0
- 7   1
-6     2
- 5   3
-   4
-'''
-#i: 톱니바퀴 번호, o:명령(1:시계방향, -1: 반시계)
-for i, o in order :
-    c[i] = (1, o)
-    #기준 톱니바퀴의 좌측으로 진행
-    for x in range(i, 0, -1):
-        #접점의 극이 다르면
-        if wheel[i][6] != wheel[i-1][2] :
-            c[i+1] = (1, c[i][1]*(-1))
+maps = [list(map(int, input().split())) for _ in range(n)]
+
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+
+def up():
+    pass
+
+def watch(x, y, cctv):
+    if cctv == 1 :
+        for i in range(4):
             pass
-        else :
-            break
+    elif cctv == 2 :
+        pass
+    elif cctv == 3 :
+        pass
+    elif cctv == 4 :
+        pass
+    elif cctv == 5 :
+        pass
 
-
-    #기준 톱니바퀴의 우측으로 진행
-    for x in range(i, 3):
-          #접점의 극이 다르면
-        if wheel[i][2] != wheel[i+1][6] :
-            #뒤에 휠을 앞 휠의 반대 방향으로 회전
-            pass
-        else :
-            break
-
-#정답 출력
-ans = 0
-for i in range(4):
-    if wheel[0] == 1 :
-        ans+=2**i
-
-print(i)
+c = []
+for x in n:
+    for y in m:
+        if 0 < maps[x][y] < 6 :
+            watch(x, y, maps[x][y])
+    
+#1: straight - 4 way
+#2: opposite    2 w
+#3: right angle 4 w
+#4: F U     4 w
+#5: all way 1 w
+#6: Wall 0 w
