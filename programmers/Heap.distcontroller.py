@@ -3,21 +3,21 @@ import heapq
 def solution(jobs):
     answer = []
     
-    heapq.heapify(jobs)
     q = []
-    
+    arr = [[] for _ in range(2002)]
     t = 0 #작업 시작 가능 시간
     ans = 0 #총 대기시간
     
-    while jobs:
-        s, e = heapq.heappop(jobs)
+    for a, b in jobs:
+        arr[a].append(b)
         
-        if s >= t :
-            t = e
-        else :
-            t = e
+    for i in range(2002):
+        ans += len(q)
         
-        heapq.heappush(q, e)
+        for a, b in i:
+            heapq.heappush(q, b)
+            
+        
     
     return None
     '''
