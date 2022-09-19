@@ -1,31 +1,40 @@
-import sys
-input = lambda : sys.stdin.readline().strip()
-for _ in range(int(input())):
-    orders = input()
-    n = int(input())
-    nums = input()[1:-1].split(',')
-
-    if nums[0] == '': nums = []
+def solution(numbers, hand):
+    maps = [[i//3, i%3] for i in range(15)]
+    L, R = 10, 12
+    answer = ''
+    for number in numbers:
+        #0번이라면 11로 변환
+        if number == 0 : number = 11
         
-    flag = True
-    way = 1
-    for o in orders :
-        if o == 'R':
-            way *= -1
+        #왼쪽이라면 왼손
+        if number%3 == 1 :
+            answer += 'L' 
+            L = number
+            
+        #오른쪽이라면 오른손
+        elif number%3 == 0 :
+            answer += 'R'
+            R = number
+            
+        #중간이라면
         else :
-            if nums :
-                if way == 1:
-                    nums = nums[1:]
+            #각 손에서 해당 숫자까지의 거리
+            distance_left = abs((number-1)%3 - (L-1)%3) + abs((number-1)//3 - (L-1)//3)
+            distance_right = abs((number-1)%3 - (R-1)%3) + abs((number-1)//3 - (R-1)//3)
+            
+            if distance_left == distance_right :
+                if hand == 'right' :
+                    answer += 'R' 
+                    R = number
                 else :
-                    nums = nums[:-1]
+                    answer += 'L' 
+                    L = number
+                
             else :
-                flag = False
-                break
-        print(nums)
-    if way == -1:
-        nums.reverse()
-
-    if flag :
-        print('['+','.join(nums)+']')
-    else :
-        print('error')
+                if distance_left > distance_right :
+                    answer += 'R'
+                    R = number
+                else :
+                    answer += 'L'
+                    L = number
+    return answer
