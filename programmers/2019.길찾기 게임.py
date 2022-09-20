@@ -12,22 +12,19 @@ def drow_graph():
     pass
 
 def solution(nodeinfo):
-    # graph = [[] for _ in range(len(nodeinfo))]
-    node = defaultdict(list)
+    for i in range(len(nodeinfo)):
+        nodeinfo[i].append(i+1)
     
-    for idx, i in enumerate(nodeinfo):
-        node[i[0]].append((idx, i[1]))
+    arrY = sorted(nodeinfo)
+    arrX = sorted(nodeinfo, key=lambda x : x[1])
     
-    for key in node.keys():
-        node[key].sort()
-    node_dic = {idx:i for idx, i in enumerate(nodeinfo)}
-    node = [i for i in sorted(node_dic.items(), reverse=True, key=lambda x: x[1][1])]
+    print(arrX)
+    print(arrY)
     
-    root = node[0][0]
     
-    print(root)
 
-    return 
+    arrX, arrY
+    
 
 
 
