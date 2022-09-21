@@ -1,33 +1,33 @@
 '''
 부모 높이 저장.
-
-
-
 '''
 
 from collections import defaultdict
 from bisect import bisect_left
 
-def drow_graph():
-    pass
+def drow_graph(parent, arrX, arrY):
+    if not arrX:
+        return -1
+
+    h_x = arrX[0][0]
+    
+    graph[0] = 1
+    
+    
 
 def solution(nodeinfo):
-    # graph = [[] for _ in range(len(nodeinfo))]
-    node = defaultdict(list)
+    for i in range(len(nodeinfo)):
+        nodeinfo[i].append(i+1)
     
-    for idx, i in enumerate(nodeinfo):
-        node[i[0]].append((idx, i[1]))
+    graph = [[[] for _ in range(2)] for _ in range(len(nodeinfo))]
+    arrX = sorted(nodeinfo)
+    arrY = sorted(nodeinfo, key=lambda x : x[1])
     
-    for key in node.keys():
-        node[key].sort()
-    node_dic = {idx:i for idx, i in enumerate(nodeinfo)}
-    node = [i for i in sorted(node_dic.items(), reverse=True, key=lambda x: x[1][1])]
+    print(arrX)
+    print(arrY)
     
-    root = node[0][0]
+    drow_graph(arrX[0], arrX, arrY)
     
-    print(root)
-
-    return 
 
 
 
